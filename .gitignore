@@ -1,0 +1,10 @@
+# Local Pi runtime state
+.atl/
+
+# Backups & temp
+Respaldo.html
+captura.png
+alpha_preview.png
+
+# IDE / Editor
+opencode.json
