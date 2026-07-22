@@ -20,23 +20,24 @@
 }
 
 body {
-    /* Posicionamiento */
-    position: relative;
-
-    /* Box model */
+    margin: 0;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-
-    /* Tipografía */
     font-family: 'Inter', sans-serif;
-
-    /* Visual — fondo */
     background-color: var(--color-bg-black);
     background-image: url('../Fondo Web.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#app {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
 }
 
 /* ================= PANEL BLANCO SUPERIOR ================= */
@@ -51,7 +52,7 @@ body {
     /* Layout */
     display: flex;
     flex-direction: column;
-    height: 38vh;
+    height: 410px;
     padding: 20px 25px;
 
     /* Visual */
@@ -115,7 +116,7 @@ header {
     white-space: nowrap;
 
     /* Tipografía */
-    font-size: 0.72rem;
+    font-size: calc(0.72rem / var(--page-scale, 1));
     font-weight: 500;
     letter-spacing: 0.5px;
     color: #000;
@@ -158,7 +159,7 @@ header {
     padding: 10px 25px;
 
     /* Tipografía */
-    font-size: 0.75rem;
+    font-size: calc(0.75rem / var(--page-scale, 1));
     font-weight: 500;
     color: #000;
 
@@ -196,7 +197,7 @@ header {
     padding: 12px 25px;
 
     /* Tipografía */
-    font-size: 0.75rem;
+    font-size: calc(0.75rem / var(--page-scale, 1));
     font-weight: 600;
     color: #fff;
 
@@ -233,11 +234,11 @@ header {
 
 .hero-title h1 {
     /* Box model */
-    margin-top: 2vh;
+    margin-top: 22px;
 
     /* Tipografía */
     font-family: 'Playfair Display', serif;
-    font-size: 7vw;
+    font-size: 134px;
     font-weight: 900;
     line-height: 1;
     letter-spacing: -2px;
@@ -272,7 +273,7 @@ header {
     z-index: var(--z-footer);
 
     /* Tipografía */
-    font-size: 0.82rem;
+    font-size: calc(0.82rem / var(--page-scale, 1));
     line-height: 1.5;
     letter-spacing: 0.3px;
     color: #5c5950;
@@ -307,7 +308,7 @@ header {
     list-style: none;
 
     /* Tipografía */
-    font-size: 0.75rem;
+    font-size: calc(0.75rem / var(--page-scale, 1));
     line-height: 1.8;
     color: var(--color-text-beige);
 
@@ -374,7 +375,7 @@ header {
 
     /* Tipografía */
     font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem / var(--page-scale, 1));
     font-weight: 500;
     line-height: 1.2;
     text-align: left;
@@ -459,7 +460,7 @@ header {
 
 .social-container p {
     color: var(--color-text-beige);
-    font-size: 0.6rem;
+    font-size: calc(0.6rem / var(--page-scale, 1));
     opacity: 0.7;
 }
 
@@ -472,8 +473,8 @@ header {
     z-index: var(--z-decorative);
 
     /* Box model */
-    width: min(128.25vw, 2345.64px);
-    max-height: 108.63vh;
+    width: 2192px;
+    max-height: 1097px;
     height: auto;
 
     /* Visual */
@@ -483,7 +484,7 @@ header {
     transform: translateX(-50%);
     animation:
         decorativeRise 1.2s var(--ease-smooth) 0.3s both,
-        decorativeBreathe 4s ease-in-out 1.8s infinite;
+        decorativeFloat 5s ease-in-out 1.8s infinite;
 }
 
 @keyframes decorativeRise {
@@ -497,14 +498,12 @@ header {
     }
 }
 
-@keyframes decorativeBreathe {
+@keyframes decorativeFloat {
     0%, 100% {
-        transform: translateX(-50%);
-        opacity: 1;
+        transform: translateX(-50%) translateY(0);
     }
     50% {
-        transform: translateX(-50%);
-        opacity: 0.82;
+        transform: translateX(-50%) translateY(-8px);
     }
 }
 

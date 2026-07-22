@@ -61,4 +61,37 @@
     style.textContent =
         '@keyframes rippleAnim { to { transform: scale(2.2); opacity: 0; } }';
     document.head.appendChild(style);
+
+    // ================= SCALING CONTAINER =================
+    // Escala la página proporcionalmente al ANCHO del viewport (nunca escala arriba).
+    // Si el alto escalado supera el viewport, activa scroll vertical.
+    const DESIGN_W = 1920, DESIGN_H = 1080;
+    const app = document.getElementById('app');
+    const body = document.body;
+    const root = document.documentElement;
+
+    function fitToViewport() {
+        const scale = Math.min(window.innerWidth / DESIGN_W, 1);
+        const scaledH = DESIGN_H * scale;
+
+        // Exponer scale como CSS custom property para contrarrestar en elementos críticos
+        root.style.setProperty('--page-scale', scale);
+
+        // Solo scroll vertical si el contenido escalado es más alto que el viewport
+        body.style.overflowY = scaledH > window.innerHeight ? 'auto' : 'hidden';
+        body.style.overflowX = 'hidden';
+
+        // Centrar horizontal y verticalmente cuando el contenido entra
+        const marginLeft = Math.max(0, (window.innerWidth - DESIGN_W * scale) / 2);
+        const marginTop = scaledH < window.innerHeight
+            ? (window.innerHeight - scaledH) / 2
+            : 0;
+
+        app.style.transform = 'scale(' + scale + ')';
+        app.style.marginLeft = marginLeft + 'px';
+        app.style.marginTop = marginTop + 'px';
+    }
+
+    fitToViewport();
+    window.addEventListener('resize', fitToViewport);
 })();
