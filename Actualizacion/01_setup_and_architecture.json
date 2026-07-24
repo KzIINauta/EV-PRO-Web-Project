@@ -1,0 +1,47 @@
+{
+  "task_id": "01_setup_and_architecture",
+  "step": 1,
+  "total_steps": 7,
+  "title": "Inicialización del proyecto y configuración de arquitectura base",
+  "context": {
+    "project_goal": "Frontend de alta retención, estética premium y abstracta, sin código espagueti.",
+    "tech_stack": ["HTML5", "Vanilla JavaScript", "Vite", "TailwindCSS", "GSAP", "Lenis"],
+    "design_specs": "Paleta de colores premium (fondos oscuros profundos, acentos sutiles), tipografía moderna (ej. Inter o un estilo sans-serif geométrico).",
+    "execution_mode": "Pixel Perfect. Respeta exactamente los nombres de archivos y rutas definidos."
+  },
+  "instructions": [
+    "Paso 1: Inicializa el proyecto creando el archivo 'package.json'. Define scripts básicos: 'dev': 'vite', 'build': 'vite build'.",
+    "Paso 2: Agrega al 'package.json' las siguientes dependencias de desarrollo (devDependencies): 'vite', 'tailwindcss', 'postcss', 'autoprefixer'.",
+    "Paso 3: Agrega al 'package.json' las siguientes dependencias (dependencies): '@studio-freight/lenis', 'gsap'.",
+    "Paso 4: Crea exactamente la siguiente estructura de carpetas en la raíz: '/public/assets/', '/src/css/', '/src/js/'.",
+    "Paso 5: Crea el archivo 'tailwind.config.js' en la raíz. Configura el 'content' para leer './index.html' y './src/**/*.{js,ts,jsx,tsx}'. Extiende el 'theme' con una paleta premium: { colors: { primary: '#0A0A0A', secondary: '#171717', accent: '#D4AF37', textMain: '#F3F4F6', textMuted: '#9CA3AF' } } y tipografía sans moderna.",
+    "Paso 6: Crea el archivo 'postcss.config.js' en la raíz configurando los plugins 'tailwindcss' y 'autoprefixer'.",
+    "Paso 7: Crea el archivo 'src/css/style.css' e incluye las directivas base de Tailwind: '@tailwind base;', '@tailwind components;', '@tailwind utilities;' junto con estilos globales que oculten el overflow-x del body.",
+    "Paso 8: Crea los archivos JS vacíos en 'src/js/': 'main.js', 'animations.js', 'carousel.js', 'form.js'.",
+    "Paso 9: Crea el archivo 'index.html' en la raíz. Configura un boilerplate HTML5 válido. Incluye las etiquetas meta para SEO y viewport, enlaza Google Fonts (fuente Inter), importa 'src/css/style.css' en el <head> e importa 'src/js/main.js' justo antes del cierre del <body> usando type='module'. Crea un contenedor <main id='app' class='bg-primary text-textMain min-h-screen'></main>."
+  ],
+  "expected_output": {
+    "files_created": [
+      "package.json",
+      "tailwind.config.js",
+      "postcss.config.js",
+      "index.html",
+      "src/css/style.css",
+      "src/js/main.js",
+      "src/js/animations.js",
+      "src/js/carousel.js",
+      "src/js/form.js"
+    ],
+    "directories_created": [
+      "public/assets",
+      "src/css",
+      "src/js"
+    ]
+  },
+  "validation_criteria": [
+    "El archivo index.html debe ser un HTML válido, enlazar a style.css y tener el script main.js como módulo.",
+    "El archivo tailwind.config.js debe contener los colores 'primary', 'secondary', 'accent', 'textMain' y 'textMuted' en la extensión del theme.",
+    "Todas las carpetas y archivos en 'expected_output' deben existir con las rutas exactas proporcionadas.",
+    "No se debe crear ninguna interfaz gráfica (Navbar, Hero) en este paso, solo la arquitectura."
+  ]
+}

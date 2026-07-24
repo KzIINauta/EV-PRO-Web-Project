@@ -1,0 +1,36 @@
+{
+  "task_id": "06_footer_and_contact",
+  "step": 6,
+  "total_steps": 7,
+  "title": "Construcción del Footer, Redes Sociales y Enlaces Legales",
+  "context": {
+    "project_goal": "Frontend de alta retención, estética premium y fluida.",
+    "current_state": "Sección de Sobre Nosotros y Newsletter terminadas. Falta el cierre de la página con los datos de contacto y la información legal.",
+    "design_specs": "Footer elegante, minimalista y oscuro. Uso de sistema de cuadrícula (CSS Grid) para organizar columnas. Enlaces limpios con efectos hover sutiles en los textos y en los iconos de redes sociales.",
+    "execution_mode": "Pixel Perfect. Inyecta el código justo después de la etiqueta de cierre de la sección de registro, antes del cierre del <main> o <body>."
+  },
+  "instructions": [
+    "Paso 1: Abre 'index.html'. Después de la sección '#registro', crea la etiqueta semántica del pie de página: '<footer class=\"bg-primary border-t border-secondary/40 pt-20 pb-10\">'.",
+    "Paso 2: Dentro del <footer>, crea un contenedor principal para el contenido: '<div class=\"container mx-auto px-6 lg:px-12\">'.",
+    "Paso 3: Añade un contenedor Grid para separar la información: '<div class=\"grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24 mb-16\">'.",
+    "Paso 4: En la primera columna (col-span-1), añade la marca y descripción: '<div><span class=\"text-2xl font-bold text-textMain tracking-tighter\">LOGO</span><p class=\"mt-6 text-textMuted text-sm leading-relaxed\">El nuevo estándar en equipos de audio. Curaduría, diseño y fidelidad acústica para los más exigentes.</p></div>'.",
+    "Paso 5: En la segunda columna, crea la sección de Contacto: '<div><h3 class=\"text-textMain font-semibold mb-6 uppercase tracking-widest text-xs\">Contacto & Redes</h3><ul class=\"space-y-4\"></ul></div>'.",
+    "Paso 6: Dentro de esa lista de contacto (<ul>), añade enlaces (<li><a>) para las redes sociales y el correo electrónico, usando estas clases para los <a>: 'flex items-center gap-3 text-textMuted hover:text-accent transition-colors duration-300 text-sm'. Añade: 'WhatsApp', 'Instagram', 'Facebook' y 'Correo Electrónico'.",
+    "Paso 7: En la tercera columna, crea la sección Legal: '<div><h3 class=\"text-textMain font-semibold mb-6 uppercase tracking-widest text-xs\">Legal</h3><ul class=\"space-y-4\"></ul></div>'.",
+    "Paso 8: Dentro de esa lista legal, añade los enlaces: '<li><a href=\"#\" class=\"text-textMuted hover:text-textMain transition-colors duration-300 text-sm\">Aviso Legal</a></li>' y '<li><a href=\"#\" class=\"text-textMuted hover:text-textMain transition-colors duration-300 text-sm\">Política de Privacidad</a></li>'.",
+    "Paso 9: Debajo del Grid principal (fuera del div del grid, pero dentro del div container), añade la barra inferior de copyright: '<div class=\"pt-8 border-t border-secondary/30 flex flex-col md:flex-row items-center justify-between gap-4\">'.",
+    "Paso 10: Dentro de la barra inferior, añade el texto de derechos: '<p class=\"text-textMuted/60 text-xs\">© 2026 Todos los derechos reservados.</p>' y un pequeño disclaimer opcional de diseño: '<p class=\"text-textMuted/60 text-xs\">Diseñado con excelencia.</p>'."
+  ],
+  "expected_output": {
+    "files_created": [],
+    "files_modified": [
+      "index.html"
+    ]
+  },
+  "validation_criteria": [
+    "El <footer> debe estar correctamente cerrado y posicionado al final del contenido, antes de los scripts.",
+    "La sección de contacto debe incluir los 4 métodos de contacto solicitados (WhatsApp, Instagram, Facebook, Correo).",
+    "La sección legal debe incluir explícitamente 'Aviso Legal' y 'Política de Privacidad'.",
+    "El diseño debe ser responsivo (1 columna en móvil, 3 columnas en pantallas medianas/grandes md:grid-cols-3)."
+  ]
+}

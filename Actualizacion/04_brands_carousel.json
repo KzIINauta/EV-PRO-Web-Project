@@ -1,0 +1,35 @@
+{
+  "task_id": "04_brands_carousel",
+  "step": 4,
+  "total_steps": 7,
+  "title": "Implementación del Carrusel Infinito de Marcas",
+  "context": {
+    "project_goal": "Frontend de alta retención, estética premium y fluida.",
+    "current_state": "Sección Hero finalizada. El siguiente bloque es el listado de marcas distribuidas.",
+    "design_specs": "Efecto 'Marquee' (desplazamiento horizontal continuo). Debe ser infinito, sin saltos visibles, y utilizar animaciones CSS puras para garantizar el máximo rendimiento (60fps). Los bordes izquierdo y derecho deben tener un degradado para que las marcas aparezcan y desaparezcan suavemente.",
+    "execution_mode": "Pixel Perfect. Modifica 'index.html' para la estructura y 'src/css/style.css' para inyectar la animación personalizada."
+  },
+  "instructions": [
+    "Paso 1: Abre el archivo 'src/css/style.css'. Al final del archivo, agrega la regla de animación usando la directiva de Tailwind: '@layer utilities { @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } } .animate-marquee { animation: marquee 30s linear infinite; } }'.",
+    "Paso 2: Abre 'index.html'. Inmediatamente después del cierre de la sección Hero (</section>), crea una nueva etiqueta: '<section id=\"marcas\" class=\"w-full py-16 bg-primary border-y border-secondary/50 overflow-hidden relative\">'.",
+    "Paso 3: Dentro del <section>, añade el título del apartado: '<p class=\"text-center text-textMuted text-xs font-bold tracking-[0.2em] uppercase mb-10\">Marcas que distribuimos</p>'.",
+    "Paso 4: Crea el contenedor maestro del carrusel con máscaras de desvanecimiento en los bordes: '<div class=\"relative flex overflow-hidden w-full group\" style=\"mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);\">'.",
+    "Paso 5: Dentro de ese contenedor, crea la pista de deslizamiento que aplicará la animación: '<div class=\"flex w-[200%] animate-marquee group-hover:[animation-play-state:paused]\">'.",
+    "Paso 6: Dentro de la pista, crea el primer bloque de logos (el 50% del ancho total): '<div class=\"flex w-1/2 justify-around items-center space-x-8 px-4\">'.",
+    "Paso 7: Llena ese bloque con 6 etiquetas de logos (placeholders en texto por ahora con estilo premium): '<span class=\"text-xl md:text-2xl font-black text-textMuted/40 uppercase tracking-tighter hover:text-textMain transition-colors duration-300\">Marca 1</span>' (Repite esto del 1 al 6 variando el nombre).",
+    "Paso 8: Crea exactamente una copia del bloque anterior debajo de este (el otro 50% del ancho) con los mismos 6 logos para garantizar el efecto de bucle infinito perfecto sin cortes."
+  ],
+  "expected_output": {
+    "files_created": [],
+    "files_modified": [
+      "index.html",
+      "src/css/style.css"
+    ]
+  },
+  "validation_criteria": [
+    "El CSS debe incluir '.animate-marquee' y el keyframe que desplaza de 0% a -50%.",
+    "La pista del carrusel en HTML debe tener 'w-[200%]' para contener el bloque original y su copia exacta.",
+    "El efecto de máscara ('mask-image') debe aplicarse inline o vía clase para desvanecer los bordes.",
+    "Al hacer 'hover' sobre el carrusel, la animación debe pausarse ('group-hover:[animation-play-state:paused]')."
+  ]
+}

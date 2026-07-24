@@ -1,0 +1,37 @@
+{
+  "task_id": "02_layout_navbar",
+  "step": 2,
+  "total_steps": 7,
+  "title": "Construcción de Navbar Premium y Navegación Principal",
+  "context": {
+    "project_goal": "Frontend de alta retención, estética premium y fluida.",
+    "current_state": "Arquitectura base configurada en el paso 1. index.html preparado con paleta de colores inyectada mediante tailwind.config.js.",
+    "design_specs": "Navbar 'sticky' (fijo en la parte superior), efecto glassmorphism (fondo semitransparente con desenfoque), botones con estados de hover suaves e interacciones elegantes.",
+    "execution_mode": "Pixel Perfect. Inyecta únicamente el código HTML dentro del archivo existente utilizando clases utilitarias de TailwindCSS para maquetación y diseño."
+  },
+  "instructions": [
+    "Paso 1: Abre el archivo 'index.html'. Justo dentro de la etiqueta <main id='app'>, en la parte superior, crea una etiqueta semántica <header>.",
+    "Paso 2: Aplica las siguientes clases de Tailwind al <header> para lograr el comportamiento fijo y el efecto premium: 'fixed top-0 left-0 w-full z-50 bg-primary/80 backdrop-blur-md border-b border-secondary transition-all duration-300'.",
+    "Paso 3: Dentro del <header>, crea un <div> contenedor maestro con las clases: 'container mx-auto px-6 lg:px-12 h-24 flex items-center justify-between'.",
+    "Paso 4: Crea la sección del Logo a la izquierda. Inserta una etiqueta <a> con un texto limpio como marcador de posición (ej. '<span class=\"text-2xl font-bold text-textMain tracking-tighter\">LOGO</span>').",
+    "Paso 5: Crea la navegación central utilizando un <nav> y una <ul> con clases flexbox: 'hidden xl:flex items-center gap-8'. Añade los enlaces (<a>): 'Inicio', 'Productos', 'Servicios', 'Marcas'. Aplica estas clases a cada enlace: 'text-textMuted hover:text-accent transition-colors duration-300 text-sm font-medium uppercase tracking-widest'.",
+    "Paso 6: Crea un contenedor derecho con la clase 'flex items-center gap-6' para los botones de acción especial y los iconos.",
+    "Paso 7: Dentro de este contenedor derecho, inserta el enlace 'Ofertas' con un color distintivo (ej. 'text-accent font-semibold hover:opacity-80 transition-opacity').",
+    "Paso 8: A continuación, añade el botón 'Hacer prueba de sonido'. Debe ser un botón estilo 'fantasma' (outline): 'border border-textMuted text-textMain px-5 py-2.5 rounded-full hover:border-accent hover:text-accent transition-all duration-300 text-sm font-medium'.",
+    "Paso 9: Añade el botón 'Ver catálogo'. Debe ser el Call to Action principal (sólido): 'bg-accent text-primary px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-transform duration-300 text-sm shadow-[0_0_15px_rgba(212,175,55,0.3)]'.",
+    "Paso 10: Finalmente, en el mismo contenedor derecho, añade un separador vertical ('w-px h-6 bg-secondary') y luego dos etiquetas <button> o <a> que contengan SVGs limpios y minimalistas (outline, stroke='currentColor', sin relleno) para 'Mi cuenta/Inicio de sesión' y 'Carrito'. Aplica a los SVGs: 'w-5 h-5 text-textMain hover:text-accent transition-colors cursor-pointer'."
+  ],
+  "expected_output": {
+    "files_created": [],
+    "files_modified": [
+      "index.html"
+    ]
+  },
+  "validation_criteria": [
+    "El <header> debe utilizar correctamente 'fixed' y 'backdrop-blur' para no bloquear el contenido al hacer scroll.",
+    "Todos los enlaces de navegación ('Inicio', 'Productos', 'Servicios', 'Marcas', 'Ofertas') deben existir en la estructura.",
+    "La jerarquía visual de los botones debe ser evidente: 'Ver catálogo' (primario/sólido) y 'Hacer prueba de sonido' (secundario/bordes).",
+    "Los iconos de usuario y carrito deben estar presentes y utilizar SVG en línea.",
+    "El HTML debe mantener un formato limpio, sin romper las etiquetas creadas en el paso 01."
+  ]
+}

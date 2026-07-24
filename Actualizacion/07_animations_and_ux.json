@@ -1,0 +1,36 @@
+{
+  "task_id": "07_animations_and_ux",
+  "step": 7,
+  "total_steps": 7,
+  "title": "Implementación de Animaciones Premium (GSAP) y Smooth Scroll (Lenis)",
+  "context": {
+    "project_goal": "Frontend de alta retención, estética premium y fluida.",
+    "current_state": "Todo el maquetado estático (HTML y CSS) está finalizado. Es el momento de inyectar la capa interactiva y de rendimiento visual.",
+    "design_specs": "Desplazamiento suave (Smooth Scroll) en toda la página usando Lenis. Animaciones de entrada (fade-up, revelación de opacidad) coordinadas con el scroll mediante GSAP y su plugin ScrollTrigger.",
+    "execution_mode": "Pixel Perfect. Lógica estructurada estrictamente en archivos JS modulares."
+  },
+  "instructions": [
+    "Paso 1: Abre 'src/js/main.js'. Importa Lenis en la parte superior: 'import Lenis from \"@studio-freight/lenis\";'.",
+    "Paso 2: Inicializa Lenis en 'main.js': Crea una instancia 'const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });'.",
+    "Paso 3: Crea el bucle de requestAnimationFrame en 'main.js' para que Lenis funcione: 'function raf(time) { lenis.raf(time); requestAnimationFrame(raf); } requestAnimationFrame(raf);'.",
+    "Paso 4: Abre 'src/js/animations.js'. Importa GSAP y ScrollTrigger: 'import { gsap } from \"gsap\"; import { ScrollTrigger } from \"gsap/ScrollTrigger\";'. Registra el plugin: 'gsap.registerPlugin(ScrollTrigger);'.",
+    "Paso 5: Importa 'animations.js' dentro de 'main.js' ('import \"./animations.js\";') para que Vite lo compile.",
+    "Paso 6: En 'animations.js', crea una animación de entrada para el Hero (se ejecuta al cargar la página): Usa 'gsap.from()' para animar el <h1>, <p> y botones del '#hero', con una translación en Y (ej. y: 50) y opacidad 0 (opacity: 0), con 'stagger: 0.2' y 'duration: 1.5' usando un ease 'power3.out'.",
+    "Paso 7: Crea animaciones al hacer scroll (ScrollTrigger) en 'animations.js'. Selecciona el contenedor de '#sobre-nosotros'. Aplica 'gsap.from()' a sus textos e imagen para que aparezcan ('y: 50, opacity: 0') cuando la sección entre al viewport ('scrollTrigger: { trigger: \"#sobre-nosotros\", start: \"top 80%\" }').",
+    "Paso 8: Replica el efecto de aparición al hacer scroll para el contenedor del formulario ('#registro') y las columnas del ('footer').",
+    "Paso 9: Abre 'package.json' y revisa que los scripts de Vite ('dev' y 'build') estén correctos. El proyecto está listo para ejecutar 'npm run dev' o compilar para producción."
+  ],
+  "expected_output": {
+    "files_created": [],
+    "files_modified": [
+      "src/js/main.js",
+      "src/js/animations.js"
+    ]
+  },
+  "validation_criteria": [
+    "La consola del navegador no debe mostrar errores de importación de módulos JS.",
+    "El desplazamiento de la página debe sentirse amortiguado e inercial gracias a Lenis.",
+    "GSAP debe usar ScrollTrigger correctamente; los elementos de 'Sobre nosotros' y el 'Footer' solo deben ser visibles cuando se hace scroll hacia ellos.",
+    "Todos los módulos JS deben estar conectados a 'main.js' para que el empaquetador Vite unifique el código final."
+  ]
+}

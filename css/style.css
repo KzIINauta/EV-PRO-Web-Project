@@ -22,15 +22,13 @@
 body {
     margin: 0;
     width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     font-family: 'Inter', sans-serif;
+    /* El fondo del hero vive en .hero-wrap, no en el body — si no, queda
+       tapado por el #app y sangra detrás de las secciones al scrollear. */
     background-color: var(--color-bg-black);
-    background-image: url('../Fondo Web.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 #app {
@@ -83,23 +81,20 @@ header {
     gap: 20px;
 }
 
-.logo-placeholder {
+.logo-img {
     /* Box model */
-    flex-shrink: 0;
-    width: 72px;
-    height: 36px;
+    width: 110px;
+    height: auto;
+    object-fit: contain;
+    margin-left: 30px;
 
-    /* Visual */
-    background: var(--color-pill-bg);
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-    /* Transición */
-    transition: background-color 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+    /* Transición sutil */
+    transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
 }
 
-.logo-placeholder:hover {
-    background: #e8e8ea;
+.logo-img:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
 }
 
 .nav-center {
@@ -513,6 +508,381 @@ header {
     outline-offset: 3px;
 }
 
+/* ===================== PÁGINA SCROLLEABLE ===================== */
+/* Hero: #app sigue midiendo 1920x1080 y escalando con fitToViewport.
+   Las nuevas secciones viven FUERA de #app, al nivel del body, ancho 100%,
+   max-width interior 1280px centrado — como pide la restricción. */
+
+/* Hero wrapper: contiene al #app y se acorta a ~75vh (min-height). overflow hidden
+   para recortar el decorativo bajo (decorative-products posicionado en bottom -150px). */
+.hero-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 75vh;
+    overflow: hidden;
+    /* Fondo del hero (antes estaba en el body, tapado por el #app) */
+    background-color: var(--color-bg-black);
+    background-image: url('../Fondo Web.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+.hero-wrap #app {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
+}
+
+/* ===================== SECCIONES EDITORIALES ===================== */
+section {
+    padding: 96px 20px;
+    width: 100%;
+}
+.section-dark  { background: #000; color: #fff; }
+.section-light { background: #f8f7f4; color: #1b1219; }
+.section-pure  { background: #fff; color: #1b1219; }
+
+.section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Overline (/01, /02, /03) reutilizando el estilo de numeración del splash */
+.overline {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    color: var(--color-text-beige);
+    margin-bottom: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.overline span { opacity: 0.6; }
+
+.section-h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    line-height: 1;
+}
+
+/* ===================== SOBRE NUESTRA MARCA ===================== */
+#sobre .section-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+#sobre .about-copy p {
+    margin-bottom: 16px;
+    line-height: 1.7;
+    color: #3a3631;
+    max-width: 46ch;
+}
+.about-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    padding: 30px;
+    background: var(--color-pill-bg);
+    box-shadow: 0 8px 28px rgba(0,0,0,.08);
+}
+
+.about-visual img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ===================== REVEAL ON SCROLL ===================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s var(--ease-smooth), transform .6s var(--ease-smooth);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.r-l { transform: translateX(-30px); }
+.reveal.r-r { transform: translateX(30px); }
+.reveal.in.r-l, .reveal.in.r-r { transform: translateX(0); }
+
+/* ===================== SCROLL HINT (HERO) ===================== */
+.scroll-hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 30;
+    pointer-events: none;
+}
+.scroll-hint .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--color-text-beige);
+    opacity: 0.5;
+}
+.scroll-hint svg {
+    color: var(--color-text-beige);
+    opacity: 0.5;
+    animation: bounceDown 2s var(--ease-smooth) infinite;
+}
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); opacity: .4; }
+    50%      { transform: translateY(6px); opacity: 1; }
+}
+
+/* ===================== CARRUSEL DE MARCAS ===================== */
+#marcas .section-inner { text-align: center; }
+#marcas .marca-desc { color: #555; max-width: 60ch; margin: 0 auto 36px; line-height: 1.6; }
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    max-width: 960px;
+    margin: 0 auto;
+}
+.carousel-track {
+    display: flex;
+    transition: transform .5s var(--ease-smooth);
+}
+.carousel-slide {
+    flex: 0 0 100%;
+    padding: 0 20px;
+}
+.brand-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.04);
+    height: 100%;
+}
+.brand-logo {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--color-pill-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #888;
+}
+.brand-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.brand-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 50ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+.brand-link {
+    color: var(--color-blue);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: .9rem;
+}
+.brand-link:hover { color: var(--color-blue-hover); }
+
+/* Flechas circulares 48px */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-blue);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color .3s var(--ease-smooth), transform .2s var(--ease-smooth), box-shadow .3s var(--ease-smooth);
+}
+.carousel-arrow:hover {
+    background: var(--color-blue-hover);
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 18px rgba(0,102,255,.4);
+}
+[data-carousel="prev"] { left: 8px; }
+[data-carousel="next"] { right: 8px; }
+
+/* Dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #d8d4cc;
+    cursor: pointer;
+    padding: 0;
+    transition: width .25s var(--ease-smooth), background-color .25s var(--ease-smooth);
+}
+.carousel-dot.active {
+    width: 24px;
+    background: var(--color-blue);
+}
+
+/* ===================== CONTACTO ===================== */
+#contacto .section-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+}
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.contact-form label {
+    font-size: .85rem;
+    font-weight: 500;
+    color: #3a3631;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font: inherit;
+    background: #fff;
+    color: #1b1219;
+    transition: border-color .25s var(--ease-smooth), box-shadow .25s var(--ease-smooth);
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: var(--color-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,102,255,.12);
+}
+.contact-form textarea { min-height: 140px; resize: vertical; }
+.contact-form button.btn-catalog { align-self: flex-start; margin-top: 8px; }
+
+.contact-info { color: #3a3631; line-height: 1.7; }
+.contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+}
+.contact-info a { color: var(--color-blue); text-decoration: none; }
+.contact-info a:hover { text-decoration: underline; }
+.contact-info .contact-bigwa {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 18px;
+    padding: 10px 18px;
+    background: #25D366;
+    color: #fff;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.contact-info .contact-social {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+.contact-info .contact-social a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-text-beige);
+    border-radius: 8px;
+    color: var(--color-text-beige);
+}
+.contact-info .contact-social a:hover { background: var(--color-blue); color: #fff; border-color: var(--color-blue); }
+
+/* ===================== FOOTER ===================== */
+.site-footer {
+    background: var(--color-bg-black);
+    color: #fff;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.site-footer .footer-copy {
+    font-size: .8rem;
+    color: #aaa;
+    letter-spacing: .3px;
+}
+.site-footer .footer-social {
+    display: flex;
+    gap: 10px;
+}
+.site-footer .footer-social a {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-text-beige);
+    border-radius: 8px;
+    color: var(--color-text-beige);
+}
+.site-footer .footer-social a:hover {
+    background: var(--color-blue);
+    color: #fff;
+    border-color: var(--color-blue);
+}
+.site-footer .footer-legal {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    font-size: .78rem;
+    color: var(--color-text-beige);
+}
+.site-footer .footer-legal li { cursor: pointer; transition: color .3s var(--ease-smooth); }
+.site-footer .footer-legal li:hover { color: #fff; }
+.site-footer .footer-legal span { opacity: .5; margin-left: 6px; }
+
+/* ===================== RESPONSIVE MÍNIMO ===================== */
+@media (max-width: 768px) {
+    #sobre .section-inner,
+    #contacto .section-inner { grid-template-columns: 1fr; }
+    .section-h2 { font-size: 2.2rem; }
+    section { padding: 64px 16px; }
+}
+@media (max-width: 480px) {
+    .carousel-arrow { width: 36px; height: 36px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -521,4 +891,6 @@ header {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+    /* Reveal totalmente visible sin animación */
+    .reveal { opacity: 1 !important; transform: none !important; }
 }
