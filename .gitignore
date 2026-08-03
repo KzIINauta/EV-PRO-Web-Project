@@ -8,6 +8,11 @@ alpha_preview.png
 
 # IDE / Editor
 opencode.json
+.opencode/
+.agents/
+.cursor/
+.claude/
+.impeccable/
 
 # GitNexus index
 .gitnexus/

@@ -100,27 +100,41 @@
     window.addEventListener('resize', fitToViewport);
 
     // ================= REVEAL ON SCROLL =================
-    // IntersectionObserver: añade .in a .reveal cuando entra en viewport, desobserva.
+    // IntersectionObserver: añade .in a .reveal, .reveal-sobre, .reveal-marcas,
+    // .reveal-contacto cuando entra en viewport, desobserva. Stagger opcional
+    // entre hermanos para dar ritmo.
     // Respeta prefers-reduced-motion: si está activo, todo queda visible sin observar.
     (function initReveal() {
-        const revealEls = document.querySelectorAll('.reveal');
+        var revealSelector = '.reveal, .reveal-sobre, .reveal-marcas, .reveal-contacto';
+        var revealEls = document.querySelectorAll(revealSelector);
         if (!revealEls.length) return;
 
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            revealEls.forEach((el) => el.classList.add('in'));
+            revealEls.forEach(function (el) { el.classList.add('in'); });
             return;
         }
 
-        const revealObserver = new IntersectionObserver(function (entries) {
+        var revealObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (e) {
                 if (e.isIntersecting) {
+                    // Stagger: delay escalonado según posición entre hermanos
+                    var parent = e.target.parentElement;
+                    var siblings = parent ? Array.from(parent.children).filter(function (c) {
+                        return c.classList.contains('reveal-sobre') ||
+                               c.classList.contains('reveal-marcas') ||
+                               c.classList.contains('reveal-contacto') ||
+                               c.classList.contains('reveal');
+                    }) : [];
+                    var idx = siblings.indexOf(e.target);
+                    var delay = Math.min(idx * 120, 480);
+                    e.target.style.transitionDelay = delay + 'ms';
                     e.target.classList.add('in');
                     revealObserver.unobserve(e.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.12 });
 
-        revealEls.forEach((el) => revealObserver.observe(el));
+        revealEls.forEach(function (el) { revealObserver.observe(el); });
     })();
 
     // ================= CARRUSEL DE MARCAS =================
